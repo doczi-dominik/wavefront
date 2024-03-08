@@ -32,7 +32,7 @@ func printSteps(m *Map) {
 	currentY := m.startY
 
 	for !(currentX == m.endX && currentY == m.endY) {
-		neighbours := generateNeighbours(m, currentX, currentY, 0)
+		neighbours := generateNeighbours(m, currentX, currentY)
 
 		var smallestNode *Node
 
@@ -42,7 +42,7 @@ func printSteps(m *Map) {
 			// Invalid moves are:
 			// - stepping on the start tile
 			// - stepping on a wall
-			isValidMove := nodeMapValue > WAVEMAP_WALL
+			isValidMove := nodeMapValue == WAVEMAP_END || nodeMapValue > 0
 
 			// take the first valid move as initial smallest
 			if smallestNode == nil {
@@ -59,6 +59,10 @@ func printSteps(m *Map) {
 			if isValidMove && smallerThan {
 				smallestNode = &node
 			}
+		}
+
+		if smallestNode == nil {
+			panic("Cannot leave start position", nil)
 		}
 
 		nextX := smallestNode.x

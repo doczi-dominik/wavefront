@@ -9,18 +9,17 @@ const (
 	DIAG_VALUE = 3
 )
 
-func generateNeighbours(m *Map, x int, y int, distance int) []Node {
+func generateNeighbours(m *Map, x int, y int) []Node {
 	nodes := []Node{
-		{x: x - 1, y: y - 1, value: distance + DIAG_VALUE},
-		{x: x - 1, y: y, value: distance + ORT_VALUE},
-		{x: x - 1, y: y + 1, value: distance + DIAG_VALUE},
+		{x: x - 1, y: y, value: ORT_VALUE},
+		{x: x, y: y - 1, value: ORT_VALUE},
+		{x: x, y: y + 1, value: ORT_VALUE},
+		{x: x + 1, y: y, value: ORT_VALUE},
 
-		{x: x, y: y - 1, value: distance + ORT_VALUE},
-		{x: x, y: y + 1, value: distance + ORT_VALUE},
-
-		{x: x + 1, y: y - 1, value: distance + DIAG_VALUE},
-		{x: x + 1, y: y, value: distance + ORT_VALUE},
-		{x: x + 1, y: y + 1, value: distance + DIAG_VALUE},
+		{x: x - 1, y: y - 1, value: DIAG_VALUE},
+		{x: x - 1, y: y + 1, value: DIAG_VALUE},
+		{x: x + 1, y: y - 1, value: DIAG_VALUE},
+		{x: x + 1, y: y + 1, value: DIAG_VALUE},
 	}
 
 	// Avoids an extra array allocation

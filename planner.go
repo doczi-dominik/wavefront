@@ -22,8 +22,7 @@ type Node struct {
 //
 // This allows easy traversal as `printSteps()` demonstrates.
 func plan(m *Map) {
-	queue := generateNeighbours(m, m.endX, m.endY, 0)
-	distance := 1
+	queue := generateNeighbours(m, m.endX, m.endY)
 	unreachable := true
 
 	for len(queue) > 0 {
@@ -42,14 +41,22 @@ func plan(m *Map) {
 				continue
 			}
 
-			m.wavemap[neighbour.y][neighbour.x] = mapVal + neighbour.value
+			neighbours := generateNeighbours(m, neighbour.x, neighbour.y)
+
+			maxVal := 0
+
+			for _, n := range neighbours {
+				if m.wavemap[n.y][n.x] >= maxVal {
+					maxVal = m.wavemap[n.y][n.x]
+				}
+			}
+
+			m.wavemap[neighbour.y][neighbour.x] = maxVal + neighbour.value
 
 			newQueue = append(
 				newQueue,
-				generateNeighbours(m, neighbour.x, neighbour.y, distance)...,
+				generateNeighbours(m, neighbour.x, neighbour.y)...,
 			)
-
-			distance++
 		}
 
 		queue = newQueue
