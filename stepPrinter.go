@@ -42,7 +42,7 @@ func printSteps(m *Map) {
 			// Invalid moves are:
 			// - stepping on the start tile
 			// - stepping on a wall
-			isValidMove := nodeMapValue >= WAVEMAP_END
+			isValidMove := nodeMapValue > WAVEMAP_WALL
 
 			// take the first valid move as initial smallest
 			if smallestNode == nil {

@@ -24,12 +24,17 @@ type Node struct {
 func plan(m *Map) {
 	queue := generateNeighbours(m, m.endX, m.endY, 0)
 	distance := 1
+	unreachable := true
 
 	for len(queue) > 0 {
 		newQueue := []Node{}
 
 		for _, neighbour := range queue {
 			mapVal := m.wavemap[neighbour.y][neighbour.x]
+
+			if mapVal == WAVEMAP_END {
+				unreachable = false
+			}
 
 			// Avoids infinite loops between adjacent
 			// nodes who consider each others as neighbours
@@ -48,5 +53,9 @@ func plan(m *Map) {
 		}
 
 		queue = newQueue
+	}
+
+	if unreachable {
+		panic("No route to end", nil)
 	}
 }
